@@ -1,9 +1,9 @@
-data "aws_ami" "amazon_linux" {
+data "aws_ami" "app_ami" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+    values = ["bitnami-tomcat-*-x86_64-hvm-ebs-nami"]
   }
 
   filter {
@@ -11,12 +11,12 @@ data "aws_ami" "amazon_linux" {
     values = ["hvm"]
   }
 
-  owners = ["137112412989"] # Amazon
+  owners = ["979382823631"] # Bitnami
 }
 
 resource "aws_instance" "web" {
   ami           = data.aws_ami.app_ami.id
-  instance_type = var.instance_type
+  instance_type = "t2.micro"
 
   tags = {
     Name = "HelloWorld"
